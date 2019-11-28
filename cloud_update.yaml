@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: javamicroservicegke
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: javamicroservicegke
+    spec:
+      containers:
+        - image: us.gcr.io/gnp-pocplantillas/javamicroservicegke:v2
+          name: javamicroservicegke
+          env:
+          - name: JAVA_OPTIONS
+            value: "-server -Xms300m -Xmx512m"
+          ports:
+            - containerPort: 8080        
